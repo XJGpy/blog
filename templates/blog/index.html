@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block main %}
+	
+	{% if error_msg %}
+    <p>{{ error_msg }}</p>
+	{% endif %}
+
+
+	{% for post in post_list %}
+		<article class="post post-{{ post.pk }}">
+			<header class="entry-header">
+				<h1 class="entry-title">
+					<a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+				</h1>
+				<div class="entry-meta">
+					<span class="post-category"><a href="{% url 'blog:category' post.category.pk %}">{{ post.category.name }}</a></span>
+					
+					{% for tag in post.tags.all %}
+					<span class="post-tag"><a href="{% url 'blog:tag' tag.pk %}">{{ tag.name }}</a></span>
+					{% endfor %}
+					
+					<span class="post-date"><a href="{% url 'blog:archives' post.created_time.year post.created_time.month %}"><time class="entry-date"
+                                                              datetime="{{ post.created_time }}">{{ post.created_time }}</time></a></span>
+					<span class="post-author"><a href="#">{{ post.author }}</a></span>
+					<span class="comments-link"><a href="{{ post.get_absolute_url }}#comment-area">{{ post.comment_set.count }} 评论</a></span>
+					<span class="views-count"><a href="{{ post.get_absolute_url }}">{{ post.views }} 阅读</a></span>
+				</div>
+			</header>
+			<div class="entry-content clearfix">
+				<p>{{ post.excerpt }}...</p>
+				<div class="read-more cl-effect-14">
+					<a href="{{ post.get_absolute_url }}" class="more-link">继续阅读 <span class="meta-nav">→</span></a>
+				</div>
+			</div>
+		</article>
+	{% empty %}
+		<div class="no-post">暂时还没有发布文章,敬请期待</div>
+	{% endfor %}
+
+	
+	
+	{% if is_paginated %}
+	<ul class="pagination">
+		{% if first %}
+			<li><a href="?page=1">1</a></li>
+		{% endif %}
+		
+		{% if left %}
+			{% if left_has_more %}
+				<span>...</span>
+			{% endif %}
+			{% for i in left %}
+				<li><a href="?page={{ i }}">{{ i }}</a></li>
+			{% endfor %}
+		{% endif %}
+		<li><a class="active" href="?page={{ page_obj.number }}">{{ page_obj.number }}</a></li>
+		{% if right %}
+			{% if right_has_more %}
+				<span>...</span>
+			{% endif %}
+			{% for i in right %}
+				<li><a href="?page={{ i }}">{{ i }}</a></li>
+			{% endfor %}
+		{% endif %}
+		{% if last %}
+			<li><a href="?page={{ paginator.num_pages }}">{{ paginator.num_pages }}</a></li>
+		{% endif %}	
+	</ul>
+	{% endif %}
+	
+	
+	
+{% endblock main %}
+            
