@@ -13,7 +13,7 @@ idna==2.6
 jieba==0.39
 Markdown==2.6.9
 numpy==1.13.1
-paramiko==2.4.0
+paramiko==2.10.1
 protobuf==3.4.0
 psycopg2==2.7.4
 pyasn1==0.4.2
