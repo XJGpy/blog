@@ -8,7 +8,7 @@ chardet==3.0.4
 cryptography==2.1.4
 Django==2.0.4
 django-haystack==2.8.1
-html5lib==0.9999999
+html5lib==0.999999999
 idna==2.6
 jieba==0.39
 Markdown==2.6.9
